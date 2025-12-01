@@ -1,3 +1,4 @@
+"use client";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { Toaster } from "@/components/ui/sonner";
 
