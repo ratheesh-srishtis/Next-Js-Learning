@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import { getCategories } from "@/lib/api/category.api";
 import { getProductById, updateProduct } from "@/lib/api/product.api";
 import { Skeleton } from "@/components/ui/skeleton";
-
+import { Suspense } from "react";
 interface Category {
   _id: string;
   name: string;
@@ -295,155 +295,207 @@ export default function EditProductPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-2">
-      <div className="flex flex-col space-y-6 max-w-8xl ">
-        {/* Header */}
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => router.back()}>
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Edit Product</h1>
-            <p className="text-muted-foreground mt-2">
-              Update product information
-            </p>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="container mx-auto py-8 px-2">
+        <div className="flex flex-col space-y-6 max-w-8xl ">
+          {/* Header */}
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" onClick={() => router.back()}>
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">
+                Edit Product
+              </h1>
+              <p className="text-muted-foreground mt-2">
+                Update product information
+              </p>
+            </div>
           </div>
-        </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Basic Information */}
-              <Card>
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Basic Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Basic Information</CardTitle>
+                    <CardDescription>
+                      Enter the basic details of the product
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-4 w-full">
+                      <Label htmlFor="categoryId">
+                        Category <span className="text-destructive">*</span>
+                      </Label>
+                      <Select
+                        value={formData.categoryId}
+                        onValueChange={(value) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            categoryId: value,
+                          }))
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories.map((category) => (
+                            <SelectItem key={category._id} value={category._id}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="name">
+                        Product Name <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="Enter product name"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="productOverview">Product Overview</Label>
+                      <Textarea
+                        id="productOverview"
+                        name="productOverview"
+                        value={formData.productOverview}
+                        onChange={handleInputChange}
+                        placeholder="Enter product description"
+                        rows={4}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Pricing */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Pricing</CardTitle>
+                    <CardDescription>Set the pricing details</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="sellingPrice">
+                        Selling Price{" "}
+                        <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="sellingPrice"
+                        name="sellingPrice"
+                        type="number"
+                        value={formData.sellingPrice}
+                        onChange={handleInputChange}
+                        placeholder="0.00"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="beforePrice">Before Price</Label>
+                      <Input
+                        id="beforePrice"
+                        name="beforePrice"
+                        type="number"
+                        value={formData.beforePrice}
+                        onChange={handleInputChange}
+                        placeholder="0.00"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="offerPercentage">Offer Percentage</Label>
+                      <Input
+                        id="offerPercentage"
+                        name="offerPercentage"
+                        type="number"
+                        value={formData.offerPercentage}
+                        onChange={handleInputChange}
+                        placeholder="0"
+                        disabled
+                        className="bg-muted"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              {/* Product Images */}
+              <Card className="lg:col-span-2">
                 <CardHeader>
-                  <CardTitle>Basic Information</CardTitle>
+                  <CardTitle>Product Images</CardTitle>
                   <CardDescription>
-                    Enter the basic details of the product
+                    Upload multiple images of the product
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="space-y-4 w-full">
-                    <Label htmlFor="categoryId">
-                      Category <span className="text-destructive">*</span>
-                    </Label>
-                    <Select
-                      value={formData.categoryId}
-                      onValueChange={(value) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          categoryId: value,
-                        }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.map((category) => (
-                          <SelectItem key={category._id} value={category._id}>
-                            {category.name}
-                          </SelectItem>
+                  {/* Existing Images */}
+                  {existingImages.length > 0 && (
+                    <div>
+                      <Label>Current Images</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                        {existingImages.map((image, index) => (
+                          <div key={index} className="relative group">
+                            <img
+                              src={image}
+                              alt={`Existing ${index + 1}`}
+                              className="h-32 w-full object-cover rounded-lg"
+                            />
+                            <Button
+                              type="button"
+                              variant="destructive"
+                              size="icon"
+                              className="absolute top-2 right-2 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                              onClick={() => removeExistingImage(index)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
                         ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="name">
-                      Product Name <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder="Enter product name"
-                      required
-                    />
-                  </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="space-y-2">
-                    <Label htmlFor="productOverview">Product Overview</Label>
-                    <Textarea
-                      id="productOverview"
-                      name="productOverview"
-                      value={formData.productOverview}
-                      onChange={handleInputChange}
-                      placeholder="Enter product description"
-                      rows={4}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Pricing */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Pricing</CardTitle>
-                  <CardDescription>Set the pricing details</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="sellingPrice">
-                      Selling Price <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="sellingPrice"
-                      name="sellingPrice"
-                      type="number"
-                      value={formData.sellingPrice}
-                      onChange={handleInputChange}
-                      placeholder="0.00"
-                      required
-                    />
+                    <Label htmlFor="images">Upload New Images</Label>
+                    <div className="flex items-center gap-4">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() =>
+                          document.getElementById("images")?.click()
+                        }
+                      >
+                        <Upload className="mr-2 h-4 w-4" />
+                        Upload Images
+                      </Button>
+                      <Input
+                        id="images"
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleImagesChange}
+                        className="hidden"
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="beforePrice">Before Price</Label>
-                    <Input
-                      id="beforePrice"
-                      name="beforePrice"
-                      type="number"
-                      value={formData.beforePrice}
-                      onChange={handleInputChange}
-                      placeholder="0.00"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="offerPercentage">Offer Percentage</Label>
-                    <Input
-                      id="offerPercentage"
-                      name="offerPercentage"
-                      type="number"
-                      value={formData.offerPercentage}
-                      onChange={handleInputChange}
-                      placeholder="0"
-                      disabled
-                      className="bg-muted"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            {/* Product Images */}
-            <Card className="lg:col-span-2">
-              <CardHeader>
-                <CardTitle>Product Images</CardTitle>
-                <CardDescription>
-                  Upload multiple images of the product
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Existing Images */}
-                {existingImages.length > 0 && (
-                  <div>
-                    <Label>Current Images</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
-                      {existingImages.map((image, index) => (
+                  {imagePreviews.length > 0 && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {imagePreviews.map((preview, index) => (
                         <div key={index} className="relative group">
                           <img
-                            src={image}
-                            alt={`Existing ${index + 1}`}
+                            src={preview}
+                            alt={`New preview ${index + 1}`}
                             className="h-32 w-full object-cover rounded-lg"
                           />
                           <Button
@@ -451,361 +503,321 @@ export default function EditProductPage() {
                             variant="destructive"
                             size="icon"
                             className="absolute top-2 right-2 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                            onClick={() => removeExistingImage(index)}
+                            onClick={() => removeImage(index)}
                           >
                             <X className="h-4 w-4" />
                           </Button>
                         </div>
                       ))}
                     </div>
-                  </div>
-                )}
+                  )}
+                </CardContent>
+              </Card>
+              {/* Dimension Image */}
+              <Card className="lg:col-span-2">
+                <CardHeader>
+                  <CardTitle>Dimension Image</CardTitle>
+                  <CardDescription>
+                    Upload dimension specifications image
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {(existingDimensionImage || dimensionPreview) && (
+                    <div className="relative w-full max-w-md">
+                      <img
+                        src={dimensionPreview || existingDimensionImage}
+                        alt="Dimension"
+                        className="w-full rounded-lg border"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute top-2 right-2 h-8 w-8"
+                        onClick={() => {
+                          setDimensionImage(null);
+                          setDimensionPreview("");
+                          setExistingDimensionImage("");
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="images">Upload New Images</Label>
-                  <div className="flex items-center gap-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => document.getElementById("images")?.click()}
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      Upload Images
-                    </Button>
-                    <Input
-                      id="images"
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      onChange={handleImagesChange}
-                      className="hidden"
-                    />
+                  <div className="space-y-2">
+                    <Label htmlFor="dimensionImage">
+                      {existingDimensionImage
+                        ? "Replace Dimension Image"
+                        : "Upload Dimension Image"}
+                    </Label>
+                    <div className="flex items-center gap-4">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() =>
+                          document.getElementById("dimensionImage")?.click()
+                        }
+                      >
+                        <Upload className="mr-2 h-4 w-4" />
+                        Upload Dimension Image
+                      </Button>
+                      <Input
+                        id="dimensionImage"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleDimensionImageChange}
+                        className="hidden"
+                      />
+                    </div>
                   </div>
-                </div>
-
-                {imagePreviews.length > 0 && (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {imagePreviews.map((preview, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={preview}
-                          alt={`New preview ${index + 1}`}
-                          className="h-32 w-full object-cover rounded-lg"
-                        />
+                </CardContent>
+              </Card>
+              {/* Colors */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Available Colors</CardTitle>
+                  <CardDescription>
+                    Add color options for this product
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {colors.map((color, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Input
+                        value={color}
+                        onChange={(e) => updateColor(index, e.target.value)}
+                        placeholder="e.g., Red, Blue, #FF0000"
+                      />
+                      {colors.length > 1 && (
                         <Button
                           type="button"
-                          variant="destructive"
+                          variant="ghost"
                           size="icon"
-                          className="absolute top-2 right-2 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => removeImage(index)}
+                          onClick={() => removeColorField(index)}
                         >
                           <X className="h-4 w-4" />
                         </Button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-            {/* Dimension Image */}
-            <Card className="lg:col-span-2">
-              <CardHeader>
-                <CardTitle>Dimension Image</CardTitle>
-                <CardDescription>
-                  Upload dimension specifications image
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {(existingDimensionImage || dimensionPreview) && (
-                  <div className="relative w-full max-w-md">
-                    <img
-                      src={dimensionPreview || existingDimensionImage}
-                      alt="Dimension"
-                      className="w-full rounded-lg border"
-                    />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-8 w-8"
-                      onClick={() => {
-                        setDimensionImage(null);
-                        setDimensionPreview("");
-                        setExistingDimensionImage("");
-                      }}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                )}
+                      )}
+                    </div>
+                  ))}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={addColorField}
+                    className="w-full"
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Color
+                  </Button>
+                </CardContent>
+              </Card>
+              {/* YouTube Links */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>YouTube Video Links</CardTitle>
+                  <CardDescription>
+                    Add YouTube video URLs for this product
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {youtubeLinks.map((link, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Input
+                        value={link}
+                        onChange={(e) =>
+                          updateYoutubeLink(index, e.target.value)
+                        }
+                        placeholder="https://youtube.com/watch?v=..."
+                      />
+                      {youtubeLinks.length > 1 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removeYoutubeLinkField(index)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={addYoutubeLinkField}
+                    className="w-full"
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add YouTube Link
+                  </Button>
+                </CardContent>
+              </Card>
+              {/* Specifications */}
+              <Card className="lg:col-span-2">
+                <CardHeader>
+                  <CardTitle>Specifications</CardTitle>
+                  <CardDescription>
+                    Add detailed specifications for this product
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="designs">Designs</Label>
+                      <Input
+                        id="designs"
+                        name="designs"
+                        value={specifications.designs}
+                        onChange={handleSpecificationChange}
+                        placeholder="Enter design type"
+                      />
+                    </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="dimensionImage">
-                    {existingDimensionImage
-                      ? "Replace Dimension Image"
-                      : "Upload Dimension Image"}
-                  </Label>
-                  <div className="flex items-center gap-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() =>
-                        document.getElementById("dimensionImage")?.click()
-                      }
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      Upload Dimension Image
-                    </Button>
-                    <Input
-                      id="dimensionImage"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleDimensionImageChange}
-                      className="hidden"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            {/* Colors */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Available Colors</CardTitle>
-                <CardDescription>
-                  Add color options for this product
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {colors.map((color, index) => (
-                  <div key={index} className="flex gap-2">
-                    <Input
-                      value={color}
-                      onChange={(e) => updateColor(index, e.target.value)}
-                      placeholder="e.g., Red, Blue, #FF0000"
-                    />
-                    {colors.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => removeColorField(index)}
+                    <div className="space-y-2">
+                      <Label htmlFor="material">Material</Label>
+                      <Input
+                        id="material"
+                        name="material"
+                        value={specifications.material}
+                        onChange={handleSpecificationChange}
+                        placeholder="Enter material"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="seater">Seater</Label>
+                      <Input
+                        id="seater"
+                        name="seater"
+                        value={specifications.seater}
+                        onChange={handleSpecificationChange}
+                        placeholder="e.g., 3 Seater"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="upholsteryMaterial">
+                        Upholstery Material
+                      </Label>
+                      <Input
+                        id="upholsteryMaterial"
+                        name="upholsteryMaterial"
+                        value={specifications.upholsteryMaterial}
+                        onChange={handleSpecificationChange}
+                        placeholder="Enter upholstery material"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="legMaterial">Leg Material</Label>
+                      <Input
+                        id="legMaterial"
+                        name="legMaterial"
+                        value={specifications.legMaterial}
+                        onChange={handleSpecificationChange}
+                        placeholder="Enter leg material"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="dimensions">Dimensions (inches)</Label>
+                      <Input
+                        id="dimensions"
+                        name="dimensions"
+                        value={specifications.dimensions}
+                        onChange={handleSpecificationChange}
+                        placeholder="e.g., 72x36x32"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="foam">Foam</Label>
+                      <Input
+                        id="foam"
+                        name="foam"
+                        value={specifications.foam}
+                        onChange={handleSpecificationChange}
+                        placeholder="Enter foam type"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="armrest">Armrest</Label>
+                      <Select
+                        value={specifications.armrest}
+                        onValueChange={(value) =>
+                          setSpecifications((prev) => ({
+                            ...prev,
+                            armrest: value,
+                          }))
+                        }
                       >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select armrest option" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="yes">Yes</SelectItem>
+                          <SelectItem value="no">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="shape">Shape</Label>
+                      <Select
+                        value={specifications.shape}
+                        onValueChange={(value) =>
+                          setSpecifications((prev) => ({
+                            ...prev,
+                            shape: value,
+                          }))
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select shape" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="round">Round</SelectItem>
+                          <SelectItem value="square">Square</SelectItem>
+                          <SelectItem value="rectangle">Rectangle</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                ))}
+
+                  <div className="space-y-2">
+                    <Label htmlFor="note">Note</Label>
+                    <Textarea
+                      id="note"
+                      name="note"
+                      value={specifications.note}
+                      onChange={handleSpecificationChange}
+                      placeholder="Enter any additional notes"
+                      rows={3}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+              // ...existing code...
+              {/* Submit Buttons */}
+              <div className="lg:col-span-2 flex gap-4 justify-end">
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={addColorField}
-                  className="w-full"
+                  onClick={() => router.back()}
+                  disabled={loading}
                 >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add Color
+                  Cancel
                 </Button>
-              </CardContent>
-            </Card>
-            {/* YouTube Links */}
-            <Card>
-              <CardHeader>
-                <CardTitle>YouTube Video Links</CardTitle>
-                <CardDescription>
-                  Add YouTube video URLs for this product
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {youtubeLinks.map((link, index) => (
-                  <div key={index} className="flex gap-2">
-                    <Input
-                      value={link}
-                      onChange={(e) => updateYoutubeLink(index, e.target.value)}
-                      placeholder="https://youtube.com/watch?v=..."
-                    />
-                    {youtubeLinks.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => removeYoutubeLinkField(index)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                ))}
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={addYoutubeLinkField}
-                  className="w-full"
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add YouTube Link
+                <Button type="submit" disabled={loading}>
+                  {loading ? "Updating..." : "Update Product"}
                 </Button>
-              </CardContent>
-            </Card>
-            {/* Specifications */}
-            <Card className="lg:col-span-2">
-              <CardHeader>
-                <CardTitle>Specifications</CardTitle>
-                <CardDescription>
-                  Add detailed specifications for this product
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="designs">Designs</Label>
-                    <Input
-                      id="designs"
-                      name="designs"
-                      value={specifications.designs}
-                      onChange={handleSpecificationChange}
-                      placeholder="Enter design type"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="material">Material</Label>
-                    <Input
-                      id="material"
-                      name="material"
-                      value={specifications.material}
-                      onChange={handleSpecificationChange}
-                      placeholder="Enter material"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="seater">Seater</Label>
-                    <Input
-                      id="seater"
-                      name="seater"
-                      value={specifications.seater}
-                      onChange={handleSpecificationChange}
-                      placeholder="e.g., 3 Seater"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="upholsteryMaterial">
-                      Upholstery Material
-                    </Label>
-                    <Input
-                      id="upholsteryMaterial"
-                      name="upholsteryMaterial"
-                      value={specifications.upholsteryMaterial}
-                      onChange={handleSpecificationChange}
-                      placeholder="Enter upholstery material"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="legMaterial">Leg Material</Label>
-                    <Input
-                      id="legMaterial"
-                      name="legMaterial"
-                      value={specifications.legMaterial}
-                      onChange={handleSpecificationChange}
-                      placeholder="Enter leg material"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="dimensions">Dimensions (inches)</Label>
-                    <Input
-                      id="dimensions"
-                      name="dimensions"
-                      value={specifications.dimensions}
-                      onChange={handleSpecificationChange}
-                      placeholder="e.g., 72x36x32"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="foam">Foam</Label>
-                    <Input
-                      id="foam"
-                      name="foam"
-                      value={specifications.foam}
-                      onChange={handleSpecificationChange}
-                      placeholder="Enter foam type"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="armrest">Armrest</Label>
-                    <Select
-                      value={specifications.armrest}
-                      onValueChange={(value) =>
-                        setSpecifications((prev) => ({
-                          ...prev,
-                          armrest: value,
-                        }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select armrest option" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="yes">Yes</SelectItem>
-                        <SelectItem value="no">No</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="shape">Shape</Label>
-                    <Select
-                      value={specifications.shape}
-                      onValueChange={(value) =>
-                        setSpecifications((prev) => ({ ...prev, shape: value }))
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select shape" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="round">Round</SelectItem>
-                        <SelectItem value="square">Square</SelectItem>
-                        <SelectItem value="rectangle">Rectangle</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="note">Note</Label>
-                  <Textarea
-                    id="note"
-                    name="note"
-                    value={specifications.note}
-                    onChange={handleSpecificationChange}
-                    placeholder="Enter any additional notes"
-                    rows={3}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-            // ...existing code...
-            {/* Submit Buttons */}
-            <div className="lg:col-span-2 flex gap-4 justify-end">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => router.back()}
-                disabled={loading}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Updating..." : "Update Product"}
-              </Button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }
