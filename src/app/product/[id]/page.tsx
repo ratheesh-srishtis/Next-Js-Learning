@@ -20,6 +20,8 @@ export default function ProductDetailPage() {
   const [modalInitialTab, setModalInitialTab] = useState<
     "images" | "videos" | "dimensions"
   >("images");
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -120,6 +122,20 @@ export default function ProductDetailPage() {
     setCurrentSlide((prev) =>
       prev === carouselItems.length - 1 ? 0 : prev + 1
     );
+  };
+
+  const handleSwipe = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50; // Swipe left = next slide
+    const isRightSwipe = distance < -50; // Swipe right = previous slide
+
+    if (isLeftSwipe) {
+      handleNextSlide();
+    } else if (isRightSwipe) {
+      handlePrevSlide();
+    }
   };
 
   const getYoutubeThumbnail = async (url: string): Promise<string> => {
@@ -242,7 +258,14 @@ export default function ProductDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Image Carousel */}
             <div className="relative">
-              <div className="aspect-square bg-zinc-100 rounded-lg overflow-hidden shadow-lg">
+              <div
+                className="aspect-square bg-zinc-100 rounded-lg overflow-hidden shadow-lg"
+                onTouchStart={(e) => setTouchStart(e.targetTouches[0].clientX)}
+                onTouchEnd={(e) => {
+                  setTouchEnd(e.changedTouches[0].clientX);
+                  handleSwipe();
+                }}
+              >
                 {Array.isArray(carouselItems) &&
                 carouselItems.length > 0 &&
                 carouselItems[currentSlide] &&
@@ -297,6 +320,16 @@ export default function ProductDetailPage() {
                   <button
                     onClick={handlePrevSlide}
                     className="absolute left-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+                    // style={{ display: "none" }}
+                    onMouseEnter={(e) => {
+                      if (window.innerWidth >= 768) {
+                        (e.currentTarget as HTMLElement).style.display =
+                          "block";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.display = "none";
+                    }}
                   >
                     <svg
                       className="w-6 h-6 text-gray-800"
@@ -315,6 +348,16 @@ export default function ProductDetailPage() {
                   <button
                     onClick={handleNextSlide}
                     className="absolute right-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+                    // style={{ display: "none" }}
+                    onMouseEnter={(e) => {
+                      if (window.innerWidth >= 768) {
+                        (e.currentTarget as HTMLElement).style.display =
+                          "block";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.display = "none";
+                    }}
                   >
                     <svg
                       className="w-6 h-6 text-gray-800"
