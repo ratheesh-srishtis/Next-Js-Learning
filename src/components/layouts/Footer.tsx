@@ -69,7 +69,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-
+          {/* 
           <div>
             <h3 className="text-gray-900 font-semibold mb-3 text-sm uppercase tracking-wider">
               Media
@@ -116,7 +116,7 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           <div>
             <h3 className="text-gray-900 font-semibold mb-3 text-sm uppercase tracking-wider">
@@ -131,14 +131,14 @@ export default function Footer() {
                   Find Us
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/location/showrooms"
                   className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
                 >
                   Showrooms
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

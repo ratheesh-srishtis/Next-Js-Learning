@@ -630,7 +630,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
             {/* Contact Support Section */}
-            <div className="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 border border-blue-100">
+            <div className="mt-6 bg-zinc-to-r from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 border border-blue-100">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 {/* Icon */}
                 <div className="flex-shrink-0">

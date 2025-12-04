@@ -73,7 +73,7 @@ export default function CategoryProductsPage() {
     <div className=" bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <nav className="mb-8">
+        <nav className="mb-4">
           <p className="text-sm text-gray-600 flex items-center gap-2">
             <span
               onClick={() => router.push("/")}

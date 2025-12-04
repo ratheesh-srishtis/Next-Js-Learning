@@ -55,24 +55,24 @@ export default function Header() {
             >
               Contact Us
             </Link>
-            <Link
+            {/* <Link
               href="/media"
               className="text-[14px] hover:text-blue-600 transition-colors"
             >
               Media
-            </Link>
+            </Link> */}
             <Link
               href="/location"
               className="text-[14px] hover:text-blue-600 transition-colors"
             >
               Location
             </Link>
-            <Link
+            {/* <Link
               href="/blogs"
               className="text-[14px] hover:text-blue-600 transition-colors"
             >
               Blogs
-            </Link>
+            </Link> */}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -96,7 +96,7 @@ export default function Header() {
 
       {/* Mobile Sidebar Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 sm:w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 left-0 h-full w-64 sm:w-80 bg-white  z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -139,13 +139,13 @@ export default function Header() {
           >
             Contact Us
           </Link>
-          <Link
+          {/* <Link
             href="/media"
             className="px-4 py-3 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
             onClick={() => setIsOpen(false)}
           >
             Media
-          </Link>
+          </Link> */}
           <Link
             href="/location"
             className="px-4 py-3 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
@@ -153,13 +153,13 @@ export default function Header() {
           >
             Location
           </Link>
-          <Link
+          {/* <Link
             href="/blogs"
             className="px-4 py-3 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
             onClick={() => setIsOpen(false)}
           >
             Blogs
-          </Link>
+          </Link> */}
         </nav>
       </div>
     </>
