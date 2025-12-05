@@ -2,8 +2,8 @@ import axios from "axios";
 import { loadingService } from "./loading";
 
 const api = axios.create({
-  // baseURL: process.env.NEXT_PUBLIC_API_URL,
-  baseURL: "http://localhost:5000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  // baseURL: "http://localhost:5000/api",
   withCredentials: false,
 });
 

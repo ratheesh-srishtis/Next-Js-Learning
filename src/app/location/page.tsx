@@ -30,23 +30,23 @@ export default function FindUs() {
         </div>
 
         {/* Map Section */}
-        <div className="rounded-xl overflow-hidden shadow-2xl mb-12 border-4 border-gray-200">
+        {/* Map Section */}
+        <div className="rounded-xl overflow-hidden shadow-2xl mb-12 border-4 border-gray-200 w-full h-80 sm:h-96 md:h-[500px]">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.7892845631746!2d77.41923!3d8.18456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b046f5c5c5c5c5d%3A0x5c5c5c5c5c5c5c5c!2sRehoboth%20Timbers%20and%20Furniture!5e0!3m2!1sen!2sin!4v1234567890"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.789284563174!2d77.41923!3d8.18456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b046f5c5c5c5c5d%3A0x5c5c5c5c5c5c5c5c!2sRehoboth%20Timbers%20and%20Furniture!5e0!3m2!1sen!2sin!4v1700000000000"
             width="100%"
-            height="400"
+            height="100%"
             style={{ border: 0 }}
             allowFullScreen={true}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="w-full"
+            title="Rehoboth Timbers and Furniture Location"
           />
         </div>
-
         {/* Address & Contact Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {/* Address Card */}
-          <div className="rounded-xl p-8 sm:p-10 shadow-lg bg-white border-2 border-[#BA8C63]">
+          <div className="rounded-xl p-8 sm:p-10 shadow-lg bg-white border-2 border-[#BA8C63]/40">
             <div className="flex items-start gap-4 mb-6">
               <div className="p-3 sm:p-4 rounded-lg flex-shrink-0 text-[#BA8C63]">
                 <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-[#BA8C63]" />
@@ -77,7 +77,7 @@ export default function FindUs() {
           </div>
 
           {/* Contact Card */}
-          <div className="rounded-xl p-8 sm:p-10 shadow-lg bg-white border-2 border-[#BA8C63]">
+          <div className="rounded-xl p-8 sm:p-10 shadow-lg bg-white border-2 border-[#BA8C63]/40">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
               Contact Information
             </h2>
@@ -142,7 +142,7 @@ export default function FindUs() {
         </div>
 
         {/* Info Section */}
-        <div className="rounded-xl p-8 sm:p-10 shadow-lg bg-white mb-12 border-2 border-[#BA8C63]">
+        <div className="rounded-xl p-8 sm:p-10 shadow-lg bg-white mb-12 border-2 border-[#BA8C63]/40">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
             Why Visit Our Showroom?
           </h2>

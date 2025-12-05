@@ -394,7 +394,7 @@ export default function ProductDetailPage() {
               )}
             </div>
             {/* Product Details */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="">
               {/* Product Name */}
               <h1 className="text-1xl md:text-1xl font-bold text-gray-900 mb-4">
                 {product.name}
@@ -430,9 +430,9 @@ export default function ProductDetailPage() {
               {/* Colors */}
               {product.colors && product.colors.length > 0 && (
                 <div className="mb-3">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  <p className="text-sm font-semibold text-gray-900 mb-3">
                     Available Colors
-                  </h3>
+                  </p>
                   <div className="flex gap-3 flex-wrap">
                     {product.colors.map((color: string, index: number) => (
                       <div

@@ -153,7 +153,7 @@ export default function Footer() {
                 className="flex items-center gap-2 text-sm text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span>Call Us - 99527 32233</span>
+                <span>Call Us - +91 99527 32233</span>
               </a>
               <span className="hidden sm:inline text-gray-400">|</span>
               <a

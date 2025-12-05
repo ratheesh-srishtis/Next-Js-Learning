@@ -42,7 +42,7 @@ export default function GetInTouch() {
     {
       icon: Phone,
       title: "Call Us",
-      detail: "99527 32233",
+      detail: "+91 99527 32233",
       link: "tel:9952732233",
     },
     {
@@ -54,7 +54,10 @@ export default function GetInTouch() {
     {
       icon: MapPin,
       title: "Visit Us",
-      detail: "Tamil Nadu, India",
+      detail: `P.O, Rehoboth Timbers and Furniture
+3/127, Ramanputhur Salai
+Keezhakattuvilai, Pallam
+Nagercoil, Tamil Nadu 629601`,
       link: "#",
     },
   ];
@@ -73,36 +76,9 @@ export default function GetInTouch() {
             perfect space together.
           </p>
         </div>
-
-        {/* Contact Info Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-          {contactInfo.map((info, index) => {
-            const IconComponent = info.icon;
-            return (
-              <a
-                key={index}
-                href={info.link}
-                className="bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]  rounded-lg p-6 sm:p-8 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300"
-              >
-                <div className="flex justify-center mb-4">
-                  <div className="bg-[#BA8C63] text-white p-3 sm:p-4 rounded-full">
-                    <IconComponent className="w-6 h-6 sm:w-8 sm:h-8" />
-                  </div>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {info.title}
-                </h3>
-                <p className="text-gray-600 text-sm sm:text-base">
-                  {info.detail}
-                </p>
-              </a>
-            );
-          })}
-        </div>
-
         {/* Contact Form Section */}
-        <div className="max-w-2xl mx-auto">
-          <div className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]  rounded-xl p-6 sm:p-8 md:p-10 shadow-lg">
+        <div className="max-w-2xl mx-auto mb-12">
+          <div className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]/40  rounded-xl p-6 sm:p-8 md:p-10 shadow-lg">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               Send Us a Message
             </h2>
@@ -198,6 +174,31 @@ export default function GetInTouch() {
               </button>
             </form>
           </div>
+        </div>
+        {/* Contact Info Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+          {contactInfo.map((info, index) => {
+            const IconComponent = info.icon;
+            return (
+              <a
+                key={index}
+                href={info.link}
+                className="bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]/40/40  rounded-lg p-6 sm:p-8 text-center hover:shadow-lg hover:border-blue-300 transition-all duration-300"
+              >
+                <div className="flex justify-center mb-4">
+                  <div className="bg-[#BA8C63] text-white p-3 sm:p-4 rounded-full">
+                    <IconComponent className="w-6 h-6 sm:w-8 sm:h-8" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  {info.title}
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base whitespace-pre-line">
+                  {info.detail}
+                </p>
+              </a>
+            );
+          })}
         </div>
 
         {/* Additional Info */}

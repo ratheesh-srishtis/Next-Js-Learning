@@ -100,7 +100,7 @@ export default function Support() {
             return (
               <div
                 key={index}
-                className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63] rounded-lg p-6 sm:p-8 hover:border-blue-300 hover:shadow-lg transition-all duration-300"
+                className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]/40 rounded-lg p-6 sm:p-8 hover:border-blue-300 hover:shadow-lg transition-all duration-300"
               >
                 <div className="flex justify-center mb-4">
                   <div className="bg-[#BA8C63] text-white p-3 sm:p-4 rounded-full">
@@ -192,7 +192,7 @@ export default function Support() {
               },
             ].map((process, index) => (
               <div key={index} className="relative">
-                <div className="bg-white border border-[#BA8C63] rounded-lg p-4 sm:p-6 text-center ">
+                <div className="bg-white border border-[#BA8C63]/40 rounded-lg p-4 sm:p-6 text-center ">
                   <div className="bg-[#BA8C63] text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold mx-auto mb-3">
                     {process.step}
                   </div>
@@ -212,7 +212,7 @@ export default function Support() {
         </div>
 
         {/* Warranty Info Card */}
-        <div className="bg-white border-2 border-[#BA8C63] rounded-lg p-8 sm:p-10">
+        <div className="bg-white border-2 border-[#BA8C63]/40 rounded-lg p-8 sm:p-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Warranty & Protection
           </h2>

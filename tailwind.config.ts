@@ -8,7 +8,11 @@ export default {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["sans-serif"],
+      },
+    },
   },
   plugins: [],
 } satisfies Config;

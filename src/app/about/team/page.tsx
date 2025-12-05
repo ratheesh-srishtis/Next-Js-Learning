@@ -68,7 +68,7 @@ export default function OurTeam() {
             return (
               <div
                 key={index}
-                className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63] rounded-lg p-6 sm:p-8 text-center hover:shadow-lg transition-shadow duration-300"
+                className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]/40 rounded-lg p-6 sm:p-8 text-center hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="flex justify-center mb-4">
                   <div className="bg-[#BA8C63] text-white p-3 sm:p-4 rounded-full">
@@ -121,7 +121,7 @@ export default function OurTeam() {
         </div>
 
         {/* Why Choose Us Section */}
-        <div className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63] rounded-lg p-8 sm:p-10 md:p-12">
+        <div className=" bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]/40 rounded-lg p-8 sm:p-10 md:p-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
             Why Our Team Matters
           </h2>

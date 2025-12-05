@@ -51,7 +51,7 @@ export default function OurStory() {
           </h1>
 
           {/* Subtitle Badge */}
-          <div className="inline-block bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63] rounded-full px-4 py-2 mb-6">
+          <div className="inline-block bg-gradient-to-b from-gray-50 to-gray-100 border border-[#BA8C63]/40 rounded-full px-4 py-2 mb-6">
             <p className="text-sm font-semibold text-[#BA8C63]">
               Crafting Dreams Since 2010
             </p>
@@ -84,7 +84,7 @@ export default function OurStory() {
             return (
               <div
                 key={index}
-                className="bg-gradient-to-b from-gray-50 to-gray-100   border border-[#BA8C63] rounded-lg p-6 sm:p-8 text-center hover:shadow-lg transition-shadow duration-300"
+                className="bg-gradient-to-b from-gray-50 to-gray-100   border border-[#BA8C63]/40 rounded-lg p-6 sm:p-8 text-center hover:shadow-lg transition-shadow duration-300"
               >
                 {/* Icon */}
                 <div className="flex justify-center mb-4">
@@ -122,7 +122,7 @@ export default function OurStory() {
             designed for your perfect home.
           </p>
           <Link href="/">
-            <button className="px-6 sm:px-8 py-3 rounded-lg bg-[#BA8C63] text-white">
+            <button className="px-6 sm:px-8 py-3 rounded-lg bg-[#BA8C63] text-white cursor-pointer">
               Explore Our Collections
             </button>
           </Link>
