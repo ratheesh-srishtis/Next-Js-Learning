@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 export default function WhatsAppButton() {
   const pathname = usePathname();
-  const phoneNumber = "1234567890"; // Replace with your WhatsApp number (include country code without +)
+  const phoneNumber = "919952732233"; // Replace with your WhatsApp number (include country code without +)
   const message = "Hello! I'm interested in your furniture products."; // Default message
 
   // Don't show on admin pages

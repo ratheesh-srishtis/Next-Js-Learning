@@ -4,7 +4,7 @@ import api from "./axios";
 export const createCategory = async (
   data: FormData | { name: string; image?: string }
 ) => {
-  const res = await api.post("/admin/category", data, {
+  const res = await api.post("/categories", data, {
     headers:
       data instanceof FormData ? { "Content-Type": "multipart/form-data" } : {},
   });
@@ -13,13 +13,13 @@ export const createCategory = async (
 
 // GET ALL
 export const getCategories = async () => {
-  const res = await api.get("/admin/category");
+  const res = await api.get("/categories");
   return res.data;
 };
 
 // UPDATE
 export const updateCategory = async (id: string, data: FormData | any) => {
-  const res = await api.put(`/admin/category/${id}`, data, {
+  const res = await api.put(`/categories/${id}`, data, {
     headers:
       data instanceof FormData ? { "Content-Type": "multipart/form-data" } : {},
   });
@@ -28,6 +28,6 @@ export const updateCategory = async (id: string, data: FormData | any) => {
 
 // DELETE
 export const deleteCategory = async (id: string) => {
-  const res = await api.delete(`/admin/category/${id}`);
+  const res = await api.delete(`/categories/${id}`);
   return res.data;
 };

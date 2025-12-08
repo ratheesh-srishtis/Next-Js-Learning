@@ -1,7 +1,4 @@
-import axios from "axios";
-import { loadingService } from "./loading";
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-// const API_URL = "http://localhost:5000/api";
+import api from "./axios";
 
 export interface Product {
   _id: string;
@@ -63,7 +60,6 @@ export interface CreateProductData {
 // CREATE PRODUCT
 
 export const createProduct = async (data: CreateProductData) => {
-  loadingService.startLoading(); // Add here
   try {
     const formData = new FormData();
 
@@ -108,47 +104,47 @@ export const createProduct = async (data: CreateProductData) => {
       formData.append("dimensionImage", data.dimensionImage);
     }
 
-    const response = await axios.post(`${API_URL}/admin/products`, formData, {
+    const response = await api.post("/products", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
 
     return response.data;
-  } finally {
-    loadingService.stopLoading(); // Add here
+  } catch (error) {
+    console.error("Error creating product:", error);
+    throw error;
   }
 };
 
 // GET ALL PRODUCTS (with optional category filter)
 export const getProducts = async (categoryId?: string) => {
-  loadingService.startLoading(); // Add here
   try {
     const params = categoryId ? { categoryId } : {};
-    const response = await axios.get(`${API_URL}/admin/products`, { params });
+    const response = await api.get("/products", { params });
     return response.data;
-  } finally {
-    loadingService.stopLoading(); // Add here
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
   }
 };
 
 // GET SINGLE PRODUCT
 export const getProductById = async (id: string) => {
-  loadingService.startLoading(); // Add here
   try {
-    const response = await axios.get(`${API_URL}/admin/products/${id}`);
+    const response = await api.get(`/products/${id}`);
     return response.data;
-  } finally {
-    loadingService.stopLoading(); // Add here
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    throw error;
   }
 };
 
 // UPDATE PRODUCT
 export const updateProduct = async (
   id: string,
-  data: Partial<CreateProductData> & { existingImages?: string[] } // Add this type
+  data: Partial<CreateProductData> & { existingImages?: string[] }
 ) => {
-  loadingService.startLoading(); // Add here
   try {
     const formData = new FormData();
 
@@ -192,29 +188,26 @@ export const updateProduct = async (
       formData.append("dimensionImage", data.dimensionImage);
     }
 
-    const response = await axios.put(
-      `${API_URL}/admin/products/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await api.put(`/products/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     return response.data;
-  } finally {
-    loadingService.stopLoading(); // Add here
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw error;
   }
 };
 
 // DELETE PRODUCT
 export const deleteProduct = async (id: string) => {
-  loadingService.startLoading(); // Add here
   try {
-    const response = await axios.delete(`${API_URL}/admin/products/${id}`);
+    const response = await api.delete(`/products/${id}`);
     return response.data;
-  } finally {
-    loadingService.stopLoading(); // Add here
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
   }
 };
