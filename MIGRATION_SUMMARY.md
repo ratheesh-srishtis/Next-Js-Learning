@@ -13,7 +13,7 @@
 - ✅ `src/lib/models/Category.ts` - Category schema
 - ✅ `src/lib/models/Admin.ts` - Admin user schema
 
-### 3. API Routes Created
+### 3. API Routes Created d
 
 - ✅ `src/app/api/auth/login/route.ts` - Admin login endpoint
 - ✅ `src/app/api/products/route.ts` - GET all & CREATE products
