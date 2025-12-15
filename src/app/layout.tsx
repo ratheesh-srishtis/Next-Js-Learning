@@ -6,8 +6,12 @@ import { Toaster } from "@/components/ui/sonner";
 import { GlobalLoader } from "@/components/ui/global-loader";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Schema from "@/components/Schema";
+import { AdminSidebarProvider } from "@/contexts/AdminSidebarContext";
 export const metadata: Metadata = {
-  title: "Kirubai Furniture",
+  title: {
+    default: "Kirubai Furniture",
+    template: "%s | Kirubai Furniture",
+  },
   description: "Discover premium furniture for your home and office.",
   keywords: [
     "furniture",
@@ -41,14 +45,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-black">
-        <Header />
-        <Schema />
-        <main className="w-full px-0 ">{children}</main>
+        <AdminSidebarProvider>
+          <Header />
+          <Schema />
+          <main className="w-full px-0 ">{children}</main>
 
-        <Footer />
-        <GlobalLoader />
-        <Toaster position="top-right" />
-        <WhatsAppButton />
+          <Footer />
+          <GlobalLoader />
+          <Toaster position="top-right" />
+          <WhatsAppButton />
+        </AdminSidebarProvider>
       </body>
     </html>
   );

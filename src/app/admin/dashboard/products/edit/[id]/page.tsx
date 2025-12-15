@@ -304,7 +304,7 @@ export default function EditProductPage() {
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight">
                 Edit Product
               </h1>
               <p className="text-muted-foreground mt-2">
@@ -454,7 +454,7 @@ export default function EditProductPage() {
                               type="button"
                               variant="destructive"
                               size="icon"
-                              className="absolute top-2 right-2 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="absolute top-2 right-2 h-6 w-6 "
                               onClick={() => removeExistingImage(index)}
                             >
                               <X className="h-4 w-4" />
@@ -799,7 +799,6 @@ export default function EditProductPage() {
                   </div>
                 </CardContent>
               </Card>
-              // ...existing code...
               {/* Submit Buttons */}
               <div className="lg:col-span-2 flex gap-4 justify-end">
                 <Button

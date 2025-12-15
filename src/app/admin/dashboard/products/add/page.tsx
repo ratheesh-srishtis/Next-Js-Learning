@@ -233,7 +233,9 @@ function AddProductForm() {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Add Product</h1>
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight">
+              Add Product
+            </h1>
             <p className="text-muted-foreground mt-2">
               Create a new product for your store
             </p>

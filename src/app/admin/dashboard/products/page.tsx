@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Package, Pencil, Trash2 } from "lucide-react";
+import { Plus, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,14 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   Select,
   SelectContent,
@@ -41,6 +33,7 @@ import {
 
 import { getCategories } from "@/lib/api/category.api";
 import { getProducts, deleteProduct, Product } from "@/lib/api/product.api";
+import { ProductList } from "@/components/admin/products/ProductList";
 
 interface Category {
   _id: string;
@@ -139,7 +132,9 @@ export default function ProductsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight">
+              Products
+            </h1>
             <p className="text-muted-foreground mt-2">
               Manage your product inventory
             </p>
@@ -218,61 +213,11 @@ export default function ProductsPage() {
                       </p>
                     </div>
                   ) : (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-20">Image</TableHead>
-                          <TableHead>Name</TableHead>
-                          <TableHead>Selling Price</TableHead>
-                          <TableHead className="w-24 text-right">
-                            Actions
-                          </TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {products.map((product) => (
-                          <TableRow key={product._id}>
-                            <TableCell>
-                              {product.images && product.images.length > 0 ? (
-                                <img
-                                  src={product.images[0]}
-                                  alt={product.name}
-                                  className="h-12 w-12 object-cover rounded"
-                                />
-                              ) : (
-                                <div className="h-12 w-12 bg-muted rounded flex items-center justify-center">
-                                  <Package className="h-6 w-6 text-muted-foreground" />
-                                </div>
-                              )}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              {product.name}
-                            </TableCell>
-                            <TableCell>
-                              ₹{product.sellingPrice.toFixed(2)}
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <div className="flex justify-end gap-2">
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={() => handleEdit(product._id)}
-                                >
-                                  <Pencil className="h-4 w-4" />
-                                </Button>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={() => handleDeleteClick(product._id)}
-                                >
-                                  <Trash2 className="h-4 w-4 text-destructive" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                    <ProductList
+                      products={products}
+                      onEdit={handleEdit}
+                      onDelete={handleDeleteClick}
+                    />
                   )}
                 </CardContent>
               </Card>
