@@ -99,13 +99,13 @@ export default function AdminSidebar() {
           >
             <Package size={18} /> Products
           </Link>
-          <Link
+          {/* <Link
             href="/admin/dashboard/settings"
             className="flex items-center gap-2 hover:text-blue-600 cursor-pointer"
             onClick={() => setIsOpen(false)}
           >
             <Settings size={18} /> Settings
-          </Link>
+          </Link> */}
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 w-full text-left hover:text-red-600 transition-colors"
